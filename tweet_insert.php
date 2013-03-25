@@ -1,8 +1,8 @@
 <?php
-define('DB_NAME', 'tweet_feed');    // The name of the database
-define('DB_USER', 'root');     // Your MySQL username
-define('DB_PASSWORD', ''); // and password
-define('DB_HOST', 'localhost');    // 99% chance you won’t need to change this value
+define('DB_NAME', 'tweetfeed');    // The name of the database
+define('DB_USER', 'tweetfeed');     // Your MySQL username
+define('DB_PASSWORD', 'Tweet@123'); // and password
+define('DB_HOST', 'tweetfeed.db.10097260.hostedresource.com');    // 99% chance you won’t need to change this value
 
 include_once 'tweets.php';
 
