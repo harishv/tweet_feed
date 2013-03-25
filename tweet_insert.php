@@ -9,7 +9,7 @@ include_once 'tweets.php';
 //connect to the database
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
 $username=$_POST['user_name'];
-
+var_dump($mysqli);
 //retrieve a twitter feed from tweetapi
 $twit_obj = new TweetsApi();
 $jsonFeed = $twit_obj->get_tweets($username);
