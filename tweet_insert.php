@@ -16,11 +16,13 @@ $jsonFeed = $twit_obj->get_tweets($username);
 
 $json = json_decode($jsonFeed);
 
-$latest_time=$mysqli->query("SELECT created_at FROM Tweets  order by created_at desc limit 1");
-var_dump($latest_time);
+$latest_time=$mysqli->query("SELECT created_at FROM tweets  order by created_at desc limit 1");
+if($latest_time){
+	if($latest_time_result){
 $latest_time_result=$latest_time->fetch_assoc();
-if($latest_time_result){
+
 	$latest_tweet=strtotime($latest_time_result['created_at']);
+}
 }
 else
 	$latest_tweet=0;
@@ -33,11 +35,11 @@ else
 // Insert each of the tweets into a database table
 foreach($json as $js){
 	if(strtotime($js->created_at) > $latest_tweet){
-		$abc=$mysqli->query("INSERT IGNORE INTO Tweets (tweet_str_id,tweet_msg,user_id_twitted,user_name_twitted,user_profile_pic,favourites,retweeted,created_at) VALUES ('".$mysqli->real_escape_string($js->id_str)."', '".$mysqli->real_escape_string($js->text)."', '".$mysqli->real_escape_string($js->user->id)."', '".$mysqli->real_escape_string($js->user->screen_name)."', '".$mysqli->real_escape_string($js->user->profile_image_url)."', '".$mysqli->real_escape_string($js->favorite_count)."', '".$mysqli->real_escape_string($js->retweet_count)."', '".$mysqli->real_escape_string(date('Y-m-d H:i:s',strtotime($js->created_at)))."')");
+		$abc=$mysqli->query("INSERT IGNORE INTO tweets (tweet_str_id,tweet_msg,user_id_twitted,user_name_twitted,user_profile_pic,favourites,retweeted,created_at) VALUES ('".$mysqli->real_escape_string($js->id_str)."', '".$mysqli->real_escape_string($js->text)."', '".$mysqli->real_escape_string($js->user->id)."', '".$mysqli->real_escape_string($js->user->screen_name)."', '".$mysqli->real_escape_string($js->user->profile_image_url)."', '".$mysqli->real_escape_string($js->favorite_count)."', '".$mysqli->real_escape_string($js->retweet_count)."', '".$mysqli->real_escape_string(date('Y-m-d H:i:s',strtotime($js->created_at)))."')");
 	}
 }
 
-$latest_tweets = $mysqli->query("SELECT * FROM Tweets  order by created_at desc limit 10");
+$latest_tweets = $mysqli->query("SELECT * FROM tweets  order by created_at desc limit 10");
 
 $tweets = array();
 

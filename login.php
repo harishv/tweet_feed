@@ -5,7 +5,11 @@
 		<fieldset>
 			<legend>Tweet Feeds Login Form</legend>
 
-			<div class="control-group">
+			<div class="control-group" style="text-align: center;">
+				<a class="btn btn-large btn-info" href="javascript:void(0);" id="twitter_login" >Login with twitter</a>
+			</div>
+
+			<!-- <div class="control-group">
 				<label for="user_id" class="control-label">Login/ User ID :</label>
 				<div class="controls">
 					<input type="text" placeholder="Login/ User ID" name="user_id" id="user_id" class="input-xlarge required email" />
@@ -23,7 +27,7 @@
 			<div class="form-actions">
 				<button type="submit" class="btn btn-primary">Login</button>
 				<button type="reset" class="btn cancel-btn">Cancel</button>
-			</div>
+			</div> -->
 
 		</fieldset>
 	</form>

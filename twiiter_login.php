@@ -1,19 +1,25 @@
+<?php 
+session_start();
+define('YOUR_CONSUMER_KEY',"Ay5M5JRFOyiu6A0D3qcQ");
+define('YOUR_CONSUMER_SECRET', "XtgVhbHOOOJ2ximHBQTCnIL9kgzzC0XySspCJHmYpM");
+define('CALLBACK_URL_TWITTER', "http://tweet.harishvarada.com/tweet_login.php");
+
 function twitter_login() {
 
-		$this->set_redirect();
+		
 
-		$this->load->library('twitteroauth');
-		$consumerkey=$this->config->item('YOUR_CONSUMER_KEY');
-		$consumersecret=$this->config->item('YOUR_CONSUMER_SECRET');
+		include('twitteroauth');
+		$consumerkey=YOUR_CONSUMER_KEY;
+		$consumersecret=YOUR_CONSUMER_SECRET;
 
-		$callback_url_twitter=base_url().$this->config->item('CALLBACK_URL_TWITTER');
+		$callback_url_twitter=base_url().CALLBACK_URL_TWITTER;
 
 		$twitteroauth = new TwitterOAuth($consumerkey, $consumersecret);
 
 		$request_token = $twitteroauth->getRequestToken($callback_url_twitter);
 			
 		$newdata = array('oauth_token'  => $request_token['oauth_token'],'oauth_token_secret'  => $request_token['oauth_token_secret']	);
-		$this->session->set_userdata($newdata);
+		$_SESSION['userdata']=$newdata;
 			
 		if ($twitteroauth->http_code == 200)
 		{
@@ -28,15 +34,14 @@ function twitter_login() {
 			//die('Something wrong happened.');
 		}
 	}
-	public function getTwitterData()
-	{
-		$this->load->library('twitteroauth');
-		$consumerkey=$this->config->item('YOUR_CONSUMER_KEY');
-		$consumersecret=$this->config->item('YOUR_CONSUMER_SECRET');
-		$callback_url_twitter=base_url().$this->config->item('CALLBACK_URL_TWITTER');
+	 
+		include('twitteroauth');
+		$consumerkey=YOUR_CONSUMER_KEY;
+		$consumersecret=YOUR_CONSUMER_SECRET;
+		$callback_url_twitter=base_url().CALLBACK_URL_TWITTER;
 
-		$oauth_token = $this->session->userdata('oauth_token');
-		$oauth_token_secret = $this->session->userdata('oauth_token_secret');
+		$oauth_token = $_SESSION['userdata']['oauth_token'];
+		$oauth_token_secret = $_SESSION['userdata']['oauth_token_secret'];
 			
 		if (!empty($_GET['oauth_verifier']) && !empty($oauth_token) && !empty($oauth_token_secret))
 		{
@@ -50,28 +55,28 @@ function twitter_login() {
 			if (isset($user_info->error))
 			{
 				//header('Location: login-twitter.php');
-			 $this->twitter_login();
+			 twitter_login();
 			}
 			else
 			{
 
 				$data = array('uid'  => $user_info->id,'username' => $user_info->name ,'image' =>  $user_info->profile_image_url,'created_at' => $user_info->created_at,'friends_count' => $user_info->friends_count ,'followers_count' => $user_info->followers_count ,'location' => $user_info->location, 'time_zone' => $user_info->time_zone ,'description' =>$user_info->description );
-				$this->session->set_userdata($data);
-				$uid = $this->session->userdata('uid');
-				$username = $this->session->userdata('username');
-				$userdata = $this->Login_model->checkTwitterUser($uid,$username);
+				$_SESSION['username']=$data['username'];
+				
+				header('Location: http://tweet.harishvarada.com/');
+				/*$userdata = $this->Login_model->checkTwitterUser($uid,$username);
 
 				if(!empty($userdata))
 				{
 					$data1 = array('name'  => 'userlogin','user' =>  $userdata,'login_from'=>'twitter');
 					$this->session->set_userdata($data1);
-					$this->get_redirect();
-				}
+					
+				}*/
 			}
 		}
 		else
 		{
-			$this->twitter_login();
+			twitter_login();
 
 		}
-	}
+	
