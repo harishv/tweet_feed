@@ -9,7 +9,7 @@ include_once 'tweets.php';
 //connect to the database
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
 $username=$_POST['user_name'];
-var_dump($mysqli);
+
 //retrieve a twitter feed from tweetapi
 $twit_obj = new TweetsApi();
 $jsonFeed = $twit_obj->get_tweets($username);
@@ -17,7 +17,7 @@ $jsonFeed = $twit_obj->get_tweets($username);
 $json = json_decode($jsonFeed);
 
 $latest_time=$mysqli->query("SELECT created_at FROM Tweets  order by created_at desc limit 1");
-
+var_dump($latest_time);
 $latest_time_result=$latest_time->fetch_assoc();
 if($latest_time_result){
 	$latest_tweet=strtotime($latest_time_result['created_at']);
