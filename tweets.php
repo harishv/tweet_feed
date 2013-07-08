@@ -3,7 +3,7 @@
 class TweetsApi {
 
 	// Default URL for gatehirng Twitter user data.
-	public $api_url = 'https://api.twitter.com/1/statuses/user_timeline.json';
+	public $api_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
 
 
 	// The screen name of the user for whom to return results for.

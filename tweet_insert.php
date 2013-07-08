@@ -22,7 +22,7 @@ if($latest_time){
 } else
 	$latest_tweet=0;
 
-// We use https://api.twitter.com/1/related_results/show/<tweet_str_id>.json?include_entities=1
+// We use https://api.twitter.com/1.1/related_results/show/<tweet_str_id>.json?include_entities=1
 // to get the replies of a specific tweet
 
 // Even this may help https://dev.twitter.com/docs/api/1/post/statuses/update
