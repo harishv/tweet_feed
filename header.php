@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Tweet Feeds</title>
+		<title><?php echo (!empty($_SESSION['username'])) ? $_SESSION['username'] . ' - ' : ''; ?>Tweet Feeds</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -32,7 +32,7 @@
 				<?php //We add the Top Navigation links here?>
 					<ul class="nav main_nav">
 						<li id="index_nav"><a href="index.php">Home</a></li>
-						<li id="contactus_nav"><a href="http://www.google.com/" target="_blank">Contact Us</a></li>
+						<li id="contactus_nav"><a href="http://www.harishvarada.com/" target="_blank">Contact Us</a></li>
 					</ul>
 
 					<?php // Added this ul for floating the Logout nav?>

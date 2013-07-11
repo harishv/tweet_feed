@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Check user session.
+// Check user session and redirect to Login Page if not Logged in.
 if(empty($_SESSION['username'])){
 	header("Location: login.php");
 }
@@ -26,14 +26,17 @@ include_once 'header.php';
 		$.ajax({
 
 			url: url,
-			type: "POST",
+			type: 'POST',
 			data: data,
 			success: function(result) {
 				var tweet_obj = jQuery.parseJSON(result);
 
 				if (Object.keys(tweet_obj).length > 0) {
 					// Clear the existing records on the view.
-					$('#tweets > tr').remove();
+					// For this, we need to destroy the dataTable first.
+					$('#user_tweets').dataTable().fnDestroy();
+					// Now clear the table body.
+					$('#tweets').empty();
 
 					var tweet_msg, count = 1;
 					// Iterate through the JSON object to fill the records.
@@ -42,50 +45,39 @@ include_once 'header.php';
 
 						tweet_msg += '<td>' + count++ + '</td>';
 						tweet_msg += '<td>' + tweet.user_name_twitted + '</td>';
-						tweet_msg += '<td><div class="row-fluid"><div class="span1"><img src="' + tweet.user_profile_pic + '" width="100%" /></div><div class="span11">' + tweet.tweet_msg +'</div></div></td>';
+						tweet_msg += '<td><div class="row-fluid"><div class="span2"><img src="' + tweet.user_profile_pic + '" width="100%" /></div><div class="span10">' + tweet.tweet_msg +'</div></div></td>';
 						tweet_msg += '<td>' + tweet.favourites + '</td>';
 						tweet_msg += '<td>' + tweet.retweeted + '</td>';
 						tweet_msg += '<td>' + tweet.created_at + '</td>';
 
 						tweet_msg += '</tr>';
 
-						// Append the final row string to the table.
 						$('#tweets').append(tweet_msg);
 					});
 
-					// This provides a normalized way of reloading DataTable on Ajax calls
-					if (typeof dTable == 'undefined') {
-						dTable = $('#user_tweets').dataTable({
-							"sDom": "<'row-fluid'<'span6'l><'span4 offset2'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
-							"sDefaultContent": "",
-							"sPaginationType": "bootstrap",
-							"aLengthMenu": [5, 10],
-							"iDisplayLength": 5
-						});
-					} else {
-						dTable.fnDraw();
-					}
+					// Initiate the dataTable using dataTable object.
+					$('#user_tweets').dataTable({
+						"sDom": "<'row-fluid'<'span6'l><'span4 offset2'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+						"sDefaultContent": "",
+					 	"sPaginationType": "bootstrap",
+					 	"aLengthMenu": [5, 10],
+					 	"iDisplayLength": 5
+					});
+
 				} else {
 					alert("No tweets found.");
 				}
+
 			}
 		});
 	}
 </script>
 
 <div class="row-fluid">
-	<div class="alert alert-info">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		Welcome <b><?php echo $_SESSION['username']; ?></b>
-	</div>
-</div>
-
-<div class="row-fluid">
 	<div class="span2 pull-right">
-		<a href="javascript:void(0)" id="refresh" class="btn btn-info span12">Refresh <i class="icon-twitter"></i></a>
+		<a href="javascript: void(0);" id="refresh" class="btn btn-info span12">Refresh <i class="icon-twitter"></i></a>
 	</div>
 </div>
-
 <div class="row-fluid" style="margin-top: 20px;">
 	<table id="user_tweets" class="table table-bordered table-hover table-striped">
 		<thead>

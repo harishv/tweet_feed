@@ -1,7 +1,6 @@
 /**
  * Project's common JS file.
  */
-
 !function($) {
 
 	$(function() {
@@ -34,4 +33,3 @@
 	});
 
 }(window.jQuery);
-

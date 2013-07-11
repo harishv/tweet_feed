@@ -9,7 +9,7 @@ include_once 'header.php';
 			<legend>Tweet Feeds Login Form</legend>
 
 			<div class="control-group" style="text-align: center;">
-				<a class="btn btn-large btn-info" href="javascript:void(0);" id="twitter_login">Login with <i class="icon-twitter icon-2x" style="vertical-align: middle;"></i></a>
+				<a class="btn btn-large btn-info" href="javascript: void(0);" id="twitter_login">Login with <i class="icon-twitter icon-2x" style="vertical-align: middle;"></i></a>
 			</div>
 
 		</fieldset>
